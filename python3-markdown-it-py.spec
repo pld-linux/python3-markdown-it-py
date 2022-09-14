@@ -5,24 +5,25 @@
 Summary:	Python port of markdown-it: Markdown parsing, done right
 Summary(pl.UTF-8):	Pythonowy port markdown-it: analiza Markdown zrobiona dobrze
 Name:		python3-markdown-it-py
-Version:	2.0.1
-Release:	5
+Version:	2.1.0
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/markdown-it-py/
 Source0:	https://files.pythonhosted.org/packages/source/m/markdown-it-py/markdown-it-py-%{version}.tar.gz
-# Source0-md5:	c04865a16b54fb561a612c5c12f0a204
+# Source0-md5:	a4cc761c382d19bd83e5089d954b5d3f
 URL:		https://pypi.org/project/markdown-it-py/
-BuildRequires:	python3-modules >= 1:3.6
-BuildRequires:	python3-setuptools >= 1:46.4.0
+BuildRequires:	python3-modules >= 1:3.7
+BuildRequires:	python3-setuptools >= 1:61
+# TODO
+#BuildRequires:	python3-flit_core >= 3.4
 %if %{with tests}
-BuildRequires:	python3-attrs >= 19
-BuildRequires:	python3-attrs < 22
 BuildRequires:	python3-mdurl >= 0.1
+BuildRequires:	python3-mdurl < 1
 BuildRequires:	python3-pytest
 BuildRequires:	python3-pytest-cov
 BuildRequires:	python3-pytest-regressions
-%if "%{py3_ver}" < "3.8"
+%if "%{py3_ver}" == "3.7"
 BuildRequires:	python3-typing_extensions >= 3.7.4
 %endif
 %endif
@@ -44,7 +45,12 @@ wtyczek.
 %prep
 %setup -q -n markdown-it-py-%{version}
 
-%{__sed} -i -e '/mdurl/ s/~=/>=/' setup.cfg
+%{__sed} -i -e 's/dynamic = \["version\"\]/version = "%{version}"/' pyproject.toml
+
+cat >setup.py <<EOF
+from setuptools import setup
+setup()
+EOF
 
 %build
 %py3_build
