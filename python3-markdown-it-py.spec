@@ -5,13 +5,13 @@
 Summary:	Python port of markdown-it: Markdown parsing, done right
 Summary(pl.UTF-8):	Pythonowy port markdown-it: analiza Markdown zrobiona dobrze
 Name:		python3-markdown-it-py
-Version:	2.1.0
+Version:	3.0.0
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/markdown-it-py/
 Source0:	https://files.pythonhosted.org/packages/source/m/markdown-it-py/markdown-it-py-%{version}.tar.gz
-# Source0-md5:	a4cc761c382d19bd83e5089d954b5d3f
+# Source0-md5:	a00d59ed2704f6590fdde0e9bad04c7c
 URL:		https://pypi.org/project/markdown-it-py/
 BuildRequires:	python3-modules >= 1:3.7
 BuildRequires:	python3-setuptools >= 1:61
