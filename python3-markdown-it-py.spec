@@ -13,24 +13,21 @@ Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/m/markdown-it-py/markdown-it-py-%{version}.tar.gz
 # Source0-md5:	a00d59ed2704f6590fdde0e9bad04c7c
 URL:		https://pypi.org/project/markdown-it-py/
-BuildRequires:	python3-modules >= 1:3.7
-BuildRequires:	python3-setuptools >= 1:61
-# TODO
-#BuildRequires:	python3-flit_core >= 3.4
+BuildRequires:	python3-build
+BuildRequires:	python3-flit_core >= 3.4
+BuildRequires:	python3-installer
+BuildRequires:	python3-modules >= 1:3.8
 %if %{with tests}
 BuildRequires:	python3-mdurl >= 0.1
 BuildRequires:	python3-mdurl < 1
 BuildRequires:	python3-pytest
 BuildRequires:	python3-pytest-cov
 BuildRequires:	python3-pytest-regressions
-%if "%{py3_ver}" == "3.7"
-BuildRequires:	python3-typing_extensions >= 3.7.4
-%endif
 %endif
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.714
+BuildRequires:	rpmbuild(macros) >= 2.044
 BuildRequires:	sed >= 4.0
-Requires:	python3-modules >= 1:3.6
+Requires:	python3-modules >= 1:3.8
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -45,15 +42,8 @@ wtyczek.
 %prep
 %setup -q -n markdown-it-py-%{version}
 
-%{__sed} -i -e 's/dynamic = \["version\"\]/version = "%{version}"/' pyproject.toml
-
-cat >setup.py <<EOF
-from setuptools import setup
-setup()
-EOF
-
 %build
-%py3_build
+%py3_build_pyproject
 
 %if %{with tests}
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
@@ -63,14 +53,14 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%py3_install
+%py3_install_pyproject
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG.md LICENSE LICENSE.markdown-it README.md
+%doc CHANGELOG.md LICENSE LICENSE.markdown-it README.md SECURITY.md
 %attr(755,root,root) %{_bindir}/markdown-it
 %{py3_sitescriptdir}/markdown_it
-%{py3_sitescriptdir}/markdown_it_py-%{version}-py*.egg-info
+%{py3_sitescriptdir}/markdown_it_py-%{version}.dist-info
