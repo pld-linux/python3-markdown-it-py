@@ -5,29 +5,31 @@
 Summary:	Python port of markdown-it: Markdown parsing, done right
 Summary(pl.UTF-8):	Pythonowy port markdown-it: analiza Markdown zrobiona dobrze
 Name:		python3-markdown-it-py
-Version:	3.0.0
-Release:	3
+Version:	4.0.0
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/markdown-it-py/
-Source0:	https://files.pythonhosted.org/packages/source/m/markdown-it-py/markdown-it-py-%{version}.tar.gz
-# Source0-md5:	a00d59ed2704f6590fdde0e9bad04c7c
+Source0:	https://files.pythonhosted.org/packages/source/m/markdown-it-py/markdown_it_py-%{version}.tar.gz
+# Source0-md5:	175fe39a7fbec21878606db1947bc9ea
 URL:		https://pypi.org/project/markdown-it-py/
 BuildRequires:	python3-build
 BuildRequires:	python3-flit_core >= 3.4
+BuildRequires:	python3-flit_core < 4
 BuildRequires:	python3-installer
-BuildRequires:	python3-modules >= 1:3.8
+BuildRequires:	python3-modules >= 1:3.10
 %if %{with tests}
 BuildRequires:	python3-mdurl >= 0.1
 BuildRequires:	python3-mdurl < 1
 BuildRequires:	python3-pytest
 BuildRequires:	python3-pytest-cov
 BuildRequires:	python3-pytest-regressions
+BuildRequires:	python3-requests
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 2.044
 BuildRequires:	sed >= 4.0
-Requires:	python3-modules >= 1:3.8
+Requires:	python3-modules >= 1:3.10
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,7 +42,7 @@ Ten pakiet to pythonowy port projektu markdown-it i kilku powiązanych
 wtyczek.
 
 %prep
-%setup -q -n markdown-it-py-%{version}
+%setup -q -n markdown_it_py-%{version}
 
 %build
 %py3_build_pyproject
